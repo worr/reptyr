@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include "config.h"
+
 #include <sys/ptrace.h>
 #include <asm/ptrace.h>
 #include <sys/types.h>
@@ -34,7 +36,6 @@
 #include <assert.h>
 #include <stddef.h>
 
-#include "config.h"
 #include "ptrace.h"
 
 /*

@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include "config.h"
+
 #include <sys/types.h>
 #include <dirent.h>
 #include <sys/syscall.h>
@@ -37,7 +39,6 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 
-#include "config.h"
 #include "ptrace.h"
 #include "reptyr.h"
 
@@ -266,7 +267,7 @@ int ignore_hup(struct ptrace_child *child, unsigned long scratch_page) {
  * second and continue with the attach -- it'll still work mostly right, you
  * just won't get the old shell back.
  */
-void wait_for_stop(pid_t pid, int fd) {
+void wait_for_stop(int fd) {
     struct timeval start, now;
     struct timespec sleep;
     struct proc_stat st;
@@ -411,7 +412,7 @@ int attach_child(pid_t pid, const char *pty, int force_stdio) {
     }
 
     kill(pid, SIGTSTP);
-    wait_for_stop(pid, statfd);
+    wait_for_stop(statfd);
 
     if (ptrace_attach_child(&child, pid)) {
         err = child.error;
@@ -518,7 +519,7 @@ int attach_child(pid_t pid, const char *pty, int force_stdio) {
 
     if (err == 0) {
         kill(child.pid, SIGSTOP);
-        wait_for_stop(child.pid, statfd);
+        wait_for_stop(statfd);
     }
     kill(child.pid, SIGWINCH);
  out_cont:

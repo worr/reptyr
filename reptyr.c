@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#include "config.h"
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -32,7 +34,6 @@
 #include <termios.h>
 #include <signal.h>
 
-#include "config.h"
 #include "reptyr.h"
 
 #ifndef __linux__
@@ -111,7 +112,7 @@ int writeall(int fd, const void *buf, ssize_t count) {
 
 volatile sig_atomic_t winch_happened = 0;
 
-void do_winch(int signal) {
+void do_winch() {
     winch_happened = 1;
 }
 

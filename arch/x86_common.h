@@ -52,8 +52,11 @@ static inline int arch_save_syscall(struct ptrace_child *child) {
     return 0;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 static inline int arch_restore_syscall(struct ptrace_child *child) {
     return 0;
 }
+#pragma GCC diagnostic pop
 
 #undef ptr

@@ -11,14 +11,13 @@ AC_LANG_C
 AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 
-AC_HEADER_STDC
-AC_HEADER_STAT
-AC_HEADER_SYS_WAIT
+AC_USE_SYSTEM_EXTENSIONS
 
 AC_CHECK_DECLS(reallocarray)
 AC_REPLACE_FUNCS(reallocarray)
 
-AH_BOTTOM([#ifndef HAVE_REALLOCARRAY
+AH_BOTTOM([#include <stdlib.h>
+#ifndef HAVE_REALLOCARRAY
 void *
 reallocarray(void *optr, size_t nmemb, size_t size);
 #endif
